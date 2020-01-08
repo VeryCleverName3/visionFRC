@@ -7,6 +7,8 @@ cap = cv2.VideoCapture(0)
 
 value = 70
 
+portraitModeSixInchAreaHexagonThing = 2800
+
 hsvValues = {
     "baseHue": 70,
     "hueRange": 20,
@@ -47,6 +49,7 @@ while 1:
     foundRectangle = False
 
     visionTargets = []
+    areas = []
 
     for c in cnts:
         M = cv2.moments(c)
@@ -55,15 +58,15 @@ while 1:
             cY = int((M["m01"] / M["m00"]))
             peri = cv2.arcLength(c, True)
             approx = cv2.approxPolyDP(c, 0.01 * peri, True)
-            print(len(approx))
+            #print(len(approx))
             #print(approx)
             if len(approx) == 8:
                 foundRectangle = True
                 visionTargets.append(approx)
+                areas.append(cv2.contourArea(c))
 
     if foundRectangle:
-        print("Vision!")
-        print(visionTargets)
+        print(areas)
     else:
         print("No Vision. :(")
 
