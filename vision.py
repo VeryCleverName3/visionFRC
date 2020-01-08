@@ -63,17 +63,12 @@ class Vision:
         areas = []
 
         for c in cnts:
-            M = cv2.moments(c) #Gets centers of contours
-            if(M["m00"] != 0):
-                #Gets center coordinates of contour
-                cX = int((M["m10"] / M["m00"]))
-                cY = int((M["m01"] / M["m00"]))
-                peri = cv2.arcLength(c, True) #Perimeter of contour
-                approx = cv2.approxPolyDP(c, 0.01 * peri, True) #Poly approximation of contour, epsilon of 1% perimeter
-                if len(approx) == self.numCorners:
-                    #Append area and approx'ed points
-                    visionTargets.append(approx)
-                    areas.append(cv2.contourArea(c))
+            peri = cv2.arcLength(c, True) #Perimeter of contour
+            approx = cv2.approxPolyDP(c, 0.01 * peri, True) #Poly approximation of contour, epsilon of 1% perimeter
+            if len(approx) == self.numCorners:
+                #Append area and approx'ed points
+                visionTargets.append(approx)
+                areas.append(cv2.contourArea(c))
 
         cv2.imshow("mask", mask)
         cv2.imshow("image", img)
@@ -87,4 +82,3 @@ class Vision:
             return out
         return out
         
-    cv2.destroyAllWindows()

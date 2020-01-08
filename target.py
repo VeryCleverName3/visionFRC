@@ -24,13 +24,10 @@ class Target:
 
     #Returns normalized center point from [-1,1]. Takes resolution x and y as arguments
     def getNormalizedCenter(self, resX, resY):
-        avgX = 0
-        avgY = 0
-        for i in self.points:
-            avgX += i[0]
-            avgY += i[1]
-        avgX /= len(self.points)
-        avgY /= len(self.points)
+        center = self.getCenter()
+
+        avgX = center[0]
+        avgY = center[1]
 
         avgX -= (resX / 2)
         avgX /= (resX / 2)
@@ -41,5 +38,5 @@ class Target:
         return [avgX, avgY]
 
     #Returns angle to center of shape with theta=0 being straight ahead. resX and resY are resolution and viewAngle is the angle of the viewport in degrees 
-    def getAngleToCenterFromCamera(self, resX, resY, viewAngle):
-        return (viewAngle / 45) * math.atan(self.getNormalizedCenter(resX, resY)[0]) * 180 / math.pi
+    def getAngleToCenterFromCamera(self, resX, resY, viewAngleX, viewAngleY):
+        return [(viewAngleX / 45) * math.atan(self.getNormalizedCenter(resX, resY)[0]) * 180 / math.pi, -(viewAngleY / 45) * math.atan(self.getNormalizedCenter(resX, resY)[1]) * 180 / math.pi]
