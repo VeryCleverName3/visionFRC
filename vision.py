@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import keyboard
 import imutils
+from target import Target
 
 class Vision:
     def __init__(self, numCorners):
@@ -24,6 +25,7 @@ class Vision:
 
         self.numCorners = numCorners
 
+    #Returns array of target objects, which contain points and area
     def find(self):
         _, img = self.cap.read() #Get frame of video
 
@@ -74,8 +76,12 @@ class Vision:
         cv2.imshow("image", img)
         cv2.imshow("edges", edges)
 
+        out = []
+        for i in range(len(visionTargets)):
+            out.append(Target(visionTargets[i], areas[i]))
+
         if cv2.waitKey(5) & 0xFF == 27:
-            return
+            return out
+        return out
         
-        return [visionTargets, areas]
     cv2.destroyAllWindows()
