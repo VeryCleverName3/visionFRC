@@ -4,7 +4,7 @@ import keyboard
 import imutils
 
 class Vision:
-    def __init__(self):
+    def __init__(self, numCorners):
         self.cap = cv2.VideoCapture(0)
 
         self.cap.set(cv2.CAP_PROP_EXPOSURE, -10) #Set exposure lower
@@ -21,6 +21,8 @@ class Vision:
             "lowerValue": 10,
             "upperValue": 250
         }
+
+        self.numCorners = numCorners
 
     def find(self):
         _, img = self.cap.read() #Get frame of video
@@ -63,7 +65,7 @@ class Vision:
                 cY = int((M["m01"] / M["m00"]))
                 peri = cv2.arcLength(c, True) #Perimeter of contour
                 approx = cv2.approxPolyDP(c, 0.01 * peri, True) #Poly approximation of contour, epsilon of 1% perimeter
-                if len(approx) == 8:
+                if len(approx) == self.numCorners:
                     #Append area and approx'ed points
                     visionTargets.append(approx)
                     areas.append(cv2.contourArea(c))
