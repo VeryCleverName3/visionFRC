@@ -1,6 +1,6 @@
 from vision import Vision
 
-#Constant for viewport's angle
+#Constant for viewport's angle- needs to change still- in degrees
 viewportAngleX = 45
 viewportAngleY = 30
 
