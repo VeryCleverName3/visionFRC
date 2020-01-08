@@ -37,11 +37,11 @@ while 1:
     mask = cv2.inRange(hsv, lower, upper) #Color mask
 
     #Blur it to reduce noise, then expand it
-    mask = cv2.medianBlur(mask, 15)
-    mask = cv2.GaussianBlur(mask, (15, 15), 0)
+    mask = cv2.medianBlur(mask, 15) #Block size 15
+    mask = cv2.GaussianBlur(mask, (15, 15), 0) #Block size 15
 
     #Get edges of image
-    edges = cv2.Canny(img, 40, 100)
+    edges = cv2.Canny(img, 40, 100) #Lower bound 40, upper of 100
 
     #Apply color mask to edges
     edges = cv2.bitwise_and(edges, edges, mask=mask)
@@ -62,7 +62,7 @@ while 1:
             cX = int((M["m10"] / M["m00"]))
             cY = int((M["m01"] / M["m00"]))
             peri = cv2.arcLength(c, True) #Perimeter of contour
-            approx = cv2.approxPolyDP(c, 0.01 * peri, True) #Poly approximation of contour
+            approx = cv2.approxPolyDP(c, 0.01 * peri, True) #Poly approximation of contour, epsilon of 1% perimeter
             #print(len(approx))
             #print(approx)
             if len(approx) == 8:
