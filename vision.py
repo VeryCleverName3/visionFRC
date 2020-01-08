@@ -25,6 +25,9 @@ class Vision:
 
         self.numCorners = numCorners
 
+        self.resX = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+        self.resY = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+
     #Returns array of target objects, which contain points and area
     def find(self):
         _, img = self.cap.read() #Get frame of video
