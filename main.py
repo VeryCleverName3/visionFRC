@@ -1,6 +1,7 @@
 from vision import Vision
 
+#Instantiate vision object
 vision = Vision()
 
 while 1:
-    print(vision.find())
+    vision.find()
