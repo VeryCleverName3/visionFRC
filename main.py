@@ -12,7 +12,8 @@ targets = vision.find()
 while 1:
     targets = vision.find()
     if(len(targets) > 0):
-        print(targets[0].getAngleToCenterFromCamera(vision.resX, vision.resY, viewportAngleX, viewportAngleY))
+        #print(targets[0].getAngleToCenterFromCamera(vision.resX, vision.resY, viewportAngleX, viewportAngleY))
+        print(targets[0].area)
     # vision.find returns an array of vision target objects
     # targets[i].points are the vertices of the target
     # targets[i].area is the area of the target in pixels

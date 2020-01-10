@@ -40,3 +40,11 @@ class Target:
     #Returns angle to center of shape with theta=0 being straight ahead. resX and resY are resolution and viewAngle is the angle of the viewport in degrees 
     def getAngleToCenterFromCamera(self, resX, resY, viewAngleX, viewAngleY):
         return [(viewAngleX / 45) * math.atan(self.getNormalizedCenter(resX, resY)[0]) * 180 / math.pi, -(viewAngleY / 45) * math.atan(self.getNormalizedCenter(resX, resY)[1]) * 180 / math.pi]
+    
+    #TODO: This function- returns in inches
+    def getDistance():
+        return 12
+    
+    #Returns 
+    def getRotation():
+        return "hi"
