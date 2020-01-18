@@ -9,7 +9,8 @@ class Target:
         for i in self.points:
             tempPoints.append(i[0])
         self.points = tempPoints
-        self.STANDARD_WIDTH = 5 #Placeholder value
+        self.STANDARD_WIDTH = 42 #Placeholder value
+        self.PIXEL_TO_IN_CONV = 42 #Placeholder value
 
     #Returns center point of vision target
     def getCenter(self):
@@ -44,9 +45,12 @@ class Target:
     def getDistance():
         return 10
     
-    #TODO: this function. Returns 
+    #Returns the rotation of the vision target- counter clockwise is positive
     def getRotation():
-        return "hi"
+        angle = math.acos(self.getCurrentPixelWidth() / self.getPixelNormalWidth())
+        if self.getFurthestXPoints()[0][1] > self.getFurthestXPoints()[1][1]:
+            angle *= -1
+        return angle
 
     #Returns farthest x and y points
     def getFurthestXPoints():
@@ -63,5 +67,9 @@ class Target:
     def getNormalWidth():
         return self.STANDARD_WIDTH / self.getDistance()
 
-    def getPixelWidth():
-        return
+    def getPixelNormalWidth():
+        return self.getNormalWidth() * self.PIXEL_TO_IN_CONV
+
+    def getCurrentPixelWidth():
+        points = self.getFurthestXPoints()
+        return math.sqrt(((points[0][0] - points[1][0]) * (points[0][0] - points[1][0])) + ((points[0][1] - points[0][1]) * (points[0][1] - points[0][1])))
