@@ -11,6 +11,10 @@ class Target:
         self.points = tempPoints
         self.STANDARD_WIDTH = 42 #Placeholder value
         self.PIXEL_TO_IN_CONV = 42 #Placeholder value
+        self.RES_X = 1080 #Placeholder
+        self.RES_Y = 720 #Placeholder
+        self.FOV_X = 45 #Placeholder, degrees
+        self.FOV_Y = 45 #Placeholder, degrees
 
     #Returns center point of vision target
     def getCenter(self):
@@ -43,7 +47,7 @@ class Target:
     
     #TODO: This function- returns in something
     def getDistance():
-        return 10
+        return (getYOffset()/math.tan((math.abs(getAngleToCenterFromCamera(self.RES_X, self.RES_Y, self.FOV_X, self.FOV_Y)[1]) * math.pi)/180)) / math.cos((math.abs(getAngleToCenterFromCamera(self.RES_X, self.RES_Y, self.FOV_X, self.FOV_Y)[0]) * math.pi)/180)
     
     #Returns the rotation of the vision target- counter clockwise is positive
     def getRotation():
