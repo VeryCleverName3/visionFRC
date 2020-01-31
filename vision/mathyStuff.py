@@ -1,7 +1,7 @@
 import math
 
 def getMotorVelocity(targetHeight, displacementFromTarget, robotVelocity):
-    g = 9.807
+    g = 9.806
     y0 = -targetHeight
     d = displacementFromTarget
     vr = robotVelocity
