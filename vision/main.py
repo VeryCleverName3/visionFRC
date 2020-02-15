@@ -1,24 +1,38 @@
 from vision import Vision
+from RioComms import RioComms
 
-#Constant for viewport's angle- needs to change still- in degrees
-viewportAngleX = 45
-viewportAngleY = 30
+TABLE_NAME = "angles"
+X_KEY_PREFIX = "xAngle"
+Y_KEY_PREFIX = "yAngle"
+SERVER_URL = "test4026"
+
+#Constants for viewport's angle- needs to change still- in degrees
+VIEWPORT_ANGLE_X = 45
+VIEWPORT_ANGLE_Y = 30
+
+def runCommsCheck():
+    send('test', 123)
+    result = rioComms.receive(TABLE_NAME, 'test', 404)
+    print("No Comms") if result == 404 else print ("Network Established")
+    return (False if result == 404 else True)
+    
+    
+def send(key, value):
+    rioComms.send(TABLE_NAME, key, value)
 
 #Instantiate vision object to look for objects with 8 vertices
 vision = Vision(8)
 
 targets = vision.find()
 
-while 1:
-    targets = vision.find()
-    if(len(targets) > 0):
-        #print(targets[0].getAngleToCenterFromCamera(vision.resX, vision.resY, viewportAngleX, viewportAngleY))
-        print(targets[0].area)
-    # vision.find returns an array of vision target objects
-    # targets[i].points are the vertices of the target
-    # targets[i].area is the area of the target in pixels
-def printTarget(target):
-    print(target.points)
-    
+rioComms = RioComms(SERVER_URL)
 
-    
+if (runCommsCheck()):
+
+    while 1:
+        targets = vision.find()
+
+        if(len(targets) > 0):
+            value = targets[0].getAngleToCenterFromCamera(vision.resX, vision.resY, VIEWPORT_ANGLE_X, VIEWPORT_ANGLE_Y)
+            send(X_KEY_PREFIX, value[0])
+            send(Y_KEY_PREFIX, value[1])
