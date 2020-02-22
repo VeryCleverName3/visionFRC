@@ -3,12 +3,15 @@ import numpy as np
 import keyboard
 import imutils
 from target import Target
+from vidgear.gears.stabilizer import Stabilizer
+
 
 class Vision:
     def __init__(self, numCorners):
         self.cap = cv2.VideoCapture(0)
+        self.stab = Stabilizer()
 
-        self.cap.set(cv2.CAP_PROP_EXPOSURE, -10) #Set exposure lower
+        self.cap.set(cv2.CAP_PROP_EXPOSURE, -0) #Set exposure lower
 
         self.value = 70 #For debugging
 
@@ -28,9 +31,16 @@ class Vision:
         self.resX = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.resY = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
 
+
     #Returns array of target objects, which contain points and area
     def find(self):
-        _, img = self.cap.read() #Get frame of video
+        (grabbed, img) = self.cap.read() #Get frame of video
+        if not grabbed:
+            return [];
+        img = self.stab.stabilize(img)
+        if img is None: 
+            self.find()
+            return []
 
         #For more debugging
         if keyboard.is_pressed("q"):
@@ -79,7 +89,7 @@ class Vision:
                 #Append area and approx'ed points
                 visionTargets.append(approx)
                 areas.append(area)
-
+        
         cv2.imshow("mask", mask)
         cv2.imshow("image", img)
         cv2.imshow("edges", edges)
