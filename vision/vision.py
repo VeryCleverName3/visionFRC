@@ -1,7 +1,5 @@
 import cv2
 import numpy as np
-import keyboard
-import imutils
 from target import Target
 
 class Vision:
@@ -9,8 +7,6 @@ class Vision:
         self.cap = cv2.VideoCapture(0)
 
         self.cap.set(cv2.CAP_PROP_EXPOSURE, -10) #Set exposure lower
-
-        self.value = 70 #For debugging
 
         self.portraitModeSixInchAreaHexagonThing = 2800
 
@@ -31,11 +27,6 @@ class Vision:
     #Returns array of target objects, which contain points and area
     def find(self):
         _, img = self.cap.read() #Get frame of video
-
-        #For more debugging
-        if keyboard.is_pressed("q"):
-            value += 1
-            print(value)
 
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV) #Convert image to hsv for color detection
 
@@ -64,7 +55,7 @@ class Vision:
 
         #Get contours of image
         cnts = cv2.findContours(filteredImg, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        cnts = imutils.grab_contours(cnts)
+        cnts = cnts[0]
 
         visionTargets = []
         areas = []
