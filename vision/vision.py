@@ -9,7 +9,7 @@ from vidgear.gears.stabilizer import Stabilizer
 class Vision:
     def __init__(self, numCorners):
         self.cap = cv2.VideoCapture(0)
-        self.stab = Stabilizer()
+        self.stab = Stabilizer(smoothing_radius = 10)
 
         self.cap.set(cv2.CAP_PROP_EXPOSURE, -0) #Set exposure lower
 
@@ -31,6 +31,11 @@ class Vision:
         self.resX = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.resY = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
 
+    def gamma_trans(self, img, gamma):
+        gamma_table=[np.power(x/255.0,gamma)*255.0 for x in range(256)]
+        gamma_table=np.round(np.array(gamma_table)).astype(np.uint8)
+        return cv2.LUT(img,gamma_table)
+
 
     #Returns array of target objects, which contain points and area
     def find(self):
@@ -46,6 +51,9 @@ class Vision:
         if keyboard.is_pressed("q"):
             value += 1
             print(value)
+
+        img = self.gamma_trans(img, 10)
+
 
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV) #Convert image to hsv for color detection
 
