@@ -32,6 +32,8 @@ if (runCommsCheck()):
     while 1:
         targets = vision.find()
 
+        send(X_KEY_PREFIX, 4026)
+        
         if(len(targets) > 0):
             value = targets[0].getAngleToCenterFromCamera(vision.resX, vision.resY, VIEWPORT_ANGLE_X, VIEWPORT_ANGLE_Y)
             print(value[0])

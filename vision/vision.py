@@ -11,12 +11,12 @@ class Vision:
         self.portraitModeSixInchAreaHexagonThing = 2800
 
         self.hsvValues = {
-            "baseHue": 70,
-            "hueRange": 20,
-            "lowerSaturation": 50,
+            "baseHue": 74,
+            "hueRange": 10,
+            "lowerSaturation": 150,
             "upperSaturation": 250,
-            "lowerValue": 50,
-            "upperValue": 250
+            "lowerValue": 90,
+            "upperValue": 230
         }
 
         self.numCorners = numCorners
@@ -45,6 +45,12 @@ class Vision:
 
         #Get edges of image
         edges = cv2.Canny(img, 40, 100) #Lower bound 40, upper of 100
+
+        otherEdges = cv2.Canny(img, 100, 200)
+
+        otherEdges = cv2.bitwise_and(otherEdges, otherEdges, mask=mask)
+
+        cv2.imshow("edges but good", otherEdges)
         filteredImg = cv2.bitwise_and(img, img, mask=mask)
 
         filteredImg = cv2.cvtColor(filteredImg, cv2.COLOR_BGR2GRAY)
@@ -54,7 +60,7 @@ class Vision:
         edges = cv2.bitwise_and(edges, edges, mask=mask)
 
         #Get contours of image
-        cnts = cv2.findContours(filteredImg, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        cnts = cv2.findContours(otherEdges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         cnts = cnts[0]
 
         visionTargets = []
