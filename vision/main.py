@@ -4,7 +4,7 @@ from RioComms import RioComms
 TABLE_NAME = "angles"
 X_KEY_PREFIX = "xAngle"
 Y_KEY_PREFIX = "yAngle"
-SERVER_URL = "test4026"
+SERVER_URL = "10.40.26.2"
 
 #Constants for viewport's angle- needs to change still- in degrees
 VIEWPORT_ANGLE_X = 45
