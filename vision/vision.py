@@ -26,7 +26,20 @@ class Vision:
 
     #Returns array of target objects, which contain points and area
     def find(self):
-        _, img = self.cap.read() #Get frame of video
+        #_, img = self.cap.read() #Get frame of video
+        #ret, img = self.cap.read() #Get frame of video
+
+        if(True):
+                print(self.cap.isOpened())
+                if(not self.cap.isOpened()):
+                        print("Opening cap")
+                        self.cap.open(0)
+
+        if (not self.cap.isOpened()):
+                print("Not opened")
+                quit()
+        ret, img = self.cap.read()
+        print(img)
 
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV) #Convert image to hsv for color detection
 
