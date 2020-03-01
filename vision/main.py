@@ -13,17 +13,20 @@ class VisionFRC():
         self.VIEWPORT_ANGLE_X = 45
         self.VIEWPORT_ANGLE_Y = 30
 
+
     def readable(self):
         return self.vision.rawOut
+
     def runCommsCheck(self):
         self.send('test', 123)
         result = rioComms.receive(self.TABLE_NAME, 'test', 404)
         print("No Comms") if result == 404 else print ("Network Established")
         return (False if result == 404 else True)
         
-
+    while 1:
+        self.targets = self.vision.find()
     def send(self, key, value):
-        rioComms.send(self.TABLE_NAME, key, value)
+        #rioComms.send(self.TABLE_NAME, key, value)
 
         #Instantiate vision object to look for objects with 8 vertices
 
