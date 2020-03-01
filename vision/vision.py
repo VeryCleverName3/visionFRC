@@ -78,8 +78,8 @@ class Vision:
 
         visionTargets = []
         areas = []
-        print(c)
         for c in cnts:
+            print(cnts)
             peri = cv2.arcLength(c, True) #Perimeter of contour
             area = cv2.contourArea(c) #Area of contour
             if area <= 10:
