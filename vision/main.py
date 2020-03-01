@@ -1,5 +1,7 @@
 from vision import Vision
-from RioComms import RioComms
+#from RioComms import RioComms
+import remotecv
+
 
 TABLE_NAME = "angles"
 X_KEY_PREFIX = "xAngle"
@@ -16,7 +18,7 @@ def runCommsCheck():
     print("No Comms") if result == 404 else print ("Network Established")
     return (False if result == 404 else True)
     
-    
+
 def send(key, value):
     rioComms.send(TABLE_NAME, key, value)
 
@@ -25,7 +27,7 @@ vision = Vision(8)
 
 targets = vision.find()
 
-rioComms = RioComms(SERVER_URL)
+'''rioComms = RioComms(SERVER_URL)
 
 if (runCommsCheck()):
 
@@ -39,3 +41,6 @@ if (runCommsCheck()):
             print(value[0])
             send(X_KEY_PREFIX, value[0])
             send(Y_KEY_PREFIX, value[1])
+'''
+while 1:
+    targets = vision.find()

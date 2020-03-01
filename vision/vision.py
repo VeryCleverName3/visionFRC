@@ -1,12 +1,14 @@
 import cv2
 import numpy as np
 from target import Target
+import remotecv
 
 class Vision:
     def __init__(self, numCorners):
+        remotecv.initialize('localhost', 5800)
         self.cap = cv2.VideoCapture(0)
 
-        self.cap.set(cv2.CAP_PROP_EXPOSURE, -10) #Set exposure lower
+        self.cap.set(cv2.CAP_PROP_EXPOSURE, -0) #Set exposure lower
 
         self.portraitModeSixInchAreaHexagonThing = 2800
 
@@ -90,10 +92,12 @@ class Vision:
                 visionTargets.append(approx)
                 areas.append(area)
 
-        cv2.imshow("mask", mask)
-        cv2.imshow("image", img)
-        cv2.imshow("edges", edges)
-        cv2.imshow("filtered", filteredImg)
+
+        remotecv.imshow('image', img)
+        #cv2.imshow("mask", mask)
+        #cv2.imshow("image", img)
+        #cv2.imshow("edges", edges)
+        #cv2.imshow("filtered", filteredImg)
 
         out = []
         for i in range(len(visionTargets)):
