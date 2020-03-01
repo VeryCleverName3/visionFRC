@@ -39,7 +39,7 @@ class Vision:
                 print("Not opened")
                 quit()
         ret, img = self.cap.read()
-        print(img)
+        #print(img)
 
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV) #Convert image to hsv for color detection
 
@@ -63,7 +63,7 @@ class Vision:
 
         otherEdges = cv2.bitwise_and(otherEdges, otherEdges, mask=mask)
 
-        cv2.imshow("edges but good", otherEdges)
+        #cv2.imshow("edges but good", otherEdges)
         filteredImg = cv2.bitwise_and(img, img, mask=mask)
 
         filteredImg = cv2.cvtColor(filteredImg, cv2.COLOR_BGR2GRAY)
