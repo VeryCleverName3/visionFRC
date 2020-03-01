@@ -4,7 +4,6 @@ from target import Target
 
 class Vision:
     def __init__(self, numCorners):
-        remotecv.initialize('localhost', 5800)
         self.cap = cv2.VideoCapture(0)
         self.rawOut = None
         self.cap.set(cv2.CAP_PROP_EXPOSURE, -0) #Set exposure lower
