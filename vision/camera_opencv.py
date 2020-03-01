@@ -2,6 +2,8 @@ import os
 import cv2
 from base_camera import BaseCamera
 from main import VisionFRC
+vision = VisionFRC()
+
 
 class Camera(BaseCamera):
     video_source = 0
@@ -23,7 +25,7 @@ class Camera(BaseCamera):
 
         while True:
             # read current frame
-            _, img = VisionFRC.readable()
+            _, img = vision.readable()
 
             # encode as a jpeg image and return it
             yield cv2.imencode('.jpg', img)[1].tobytes()
