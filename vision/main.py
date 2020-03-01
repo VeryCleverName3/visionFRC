@@ -12,6 +12,8 @@ class VisionFRC():
         #Constants for viewport's angle- needs to change still- in degrees
         self.VIEWPORT_ANGLE_X = 45
         self.VIEWPORT_ANGLE_Y = 30
+        while 1:
+            self.targets = self.vision.find()
 
 
     def readable(self):
@@ -23,8 +25,6 @@ class VisionFRC():
         print("No Comms") if result == 404 else print ("Network Established")
         return (False if result == 404 else True)
         
-    while 1:
-        self.targets = self.vision.find()
     def send(self, key, value):
         #rioComms.send(self.TABLE_NAME, key, value)
 
