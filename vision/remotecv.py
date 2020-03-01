@@ -9,9 +9,7 @@ gstCommand = None
 
 def initialize(host, port, bitrate=1024):
     global gstCommand
-    args = shlex.split(('sudo gst-launch-1.0 fdsrc ! videoparse format="i420" width=640 height=480' +
-    ' ! x264enc speed-preset=1 tune=zerolatency bitrate={}' +
-    ' ! rtph264pay config-interval=1 pt=96 ! udpsink host={} port={}').format(
+    args = shlex.split(('sudo gst-launch-1.0 fdsrc ! videoparse format="i420" width=640 height=480 ! x264enc speed-preset=1 tune=zerolatency bitrate={} ! rtph264pay config-interval=1 pt=96 ! udpsink host={} port={}').format(
     bitrate, host, port))
     gstCommand = subprocess.Popen(args, stdin=subprocess.PIPE)
 
