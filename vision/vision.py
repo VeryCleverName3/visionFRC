@@ -5,9 +5,9 @@ import imutils
 
 class Vision:
     def __init__(self, numCorners):
-        self.cap = cv2.VideoCapture(2)
+        self.cap = cv2.VideoCapture(0)
 
-        self.cap.set(cv2.CAP_PROP_EXPOSURE, -15) #Set exposure lower
+        self.cap.set(cv2.CAP_PROP_EXPOSURE, -10) #Set exposure lower
 
         self.portraitModeSixInchAreaHexagonThing = 2800
 
@@ -70,7 +70,7 @@ class Vision:
         filteredImg = cv2.bitwise_and(img, img, mask=mask)
 
         filteredImg = cv2.cvtColor(filteredImg, cv2.COLOR_BGR2GRAY)
-        _, filteredImg = cv2.threshold(filteredImg, 30, 100, cv2.THRESH_BINARY)
+        _, filteredImg = cv2.threshold(filteredImg, 20, 80, cv2.THRESH_BINARY)
 
         #Apply color mask to edges
         edges = cv2.bitwise_and(edges, edges, mask=mask)
