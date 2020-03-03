@@ -32,6 +32,8 @@ if (runCommsCheck()):
     while 1:
         targets = vision.find()
 
+        #print(vision.find())
+
         send(X_KEY_PREFIX, 4026)
         
         if(len(targets) > 0):

@@ -1,22 +1,23 @@
 import cv2
 import numpy as np
 from target import Target
+import imutils
 
 class Vision:
     def __init__(self, numCorners):
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(2)
 
-        self.cap.set(cv2.CAP_PROP_EXPOSURE, -10) #Set exposure lower
+        self.cap.set(cv2.CAP_PROP_EXPOSURE, -15) #Set exposure lower
 
         self.portraitModeSixInchAreaHexagonThing = 2800
 
         self.hsvValues = {
             "baseHue": 74,
-            "hueRange": 10,
-            "lowerSaturation": 150,
-            "upperSaturation": 250,
-            "lowerValue": 90,
-            "upperValue": 230
+            "hueRange": 5,
+            "lowerSaturation": 200,
+            "upperSaturation": 255,
+            "lowerValue": 30,
+            "upperValue": 200
         }
 
         self.numCorners = numCorners
@@ -30,7 +31,7 @@ class Vision:
         #ret, img = self.cap.read() #Get frame of video
 
         if(True):
-                print(self.cap.isOpened())
+                #print(self.cap.isOpened())
                 if(not self.cap.isOpened()):
                         print("Opening cap")
                         self.cap.open(0)
@@ -39,7 +40,9 @@ class Vision:
                 print("Not opened")
                 quit()
         ret, img = self.cap.read()
-        print(img)
+        #print(img)
+
+        img = cv2.rotate(img, cv2.ROTATE_180)
 
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV) #Convert image to hsv for color detection
 
@@ -73,8 +76,11 @@ class Vision:
         edges = cv2.bitwise_and(edges, edges, mask=mask)
 
         #Get contours of image
-        cnts = cv2.findContours(otherEdges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        cnts = cnts[0]
+        cnts = cv2.findContours(filteredImg, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        
+        cnts = imutils.grab_contours(cnts)
+
+        #print(cnts)
 
         visionTargets = []
         areas = []
@@ -85,6 +91,7 @@ class Vision:
             if area <= 10:
                 break
             approx = cv2.approxPolyDP(c, 0.01 * peri, True) #Poly approximation of contour, epsilon of 1% perimeter
+            #print(len(approx))
             if len(approx) == self.numCorners:
                 #Append area and approx'ed points
                 visionTargets.append(approx)
