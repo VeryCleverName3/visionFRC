@@ -13,7 +13,7 @@ class Vision:
 
         self.hsvValues = {
             "baseHue": 74,
-            "hueRange": 5,
+            "hueRange": 10,
             "lowerSaturation": 200,
             "upperSaturation": 255,
             "lowerValue": 30,
